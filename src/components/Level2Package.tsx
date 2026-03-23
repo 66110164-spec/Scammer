@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 
 interface Level2Props {
@@ -7,6 +6,7 @@ interface Level2Props {
   timeLeft: number;
 }
 
+// Icon สำหรับปากกา
 const PencilIcon = () => (
   <svg width="85" height="85" viewBox="0 0 100 100" className="drop-shadow-lg">
     <circle cx="50" cy="50" r="48" fill="#C98BFF" />
@@ -17,19 +17,15 @@ const PencilIcon = () => (
   </svg>
 );
 
+// Icon สำหรับถังขยะ (ปุ่มส่งงาน)
 const TrashIcon = () => (
   <svg width="92" height="92" viewBox="0 0 100 100" className="drop-shadow-lg">
     <circle cx="50" cy="50" r="48" fill="#C98BFF" />
-    {/* Lid */}
     <path d="M30 29L45 19L70 24L60 36L30 29Z" fill="#982598" />
-    {/* Bin */}
     <path d="M30 44L35 79C35 81 37 82 39 82H61C63 82 65 81 65 79L70 44H30Z" fill="#982598" />
-    {/* Grid lines */}
     <line x1="40" y1="44" x2="43" y2="82" stroke="#C98BFF" strokeWidth="1.5" />
     <line x1="50" y1="44" x2="50" y2="82" stroke="#C98BFF" strokeWidth="1.5" />
     <line x1="60" y1="44" x2="57" y2="82" stroke="#C98BFF" strokeWidth="1.5" />
-    <line x1="32" y1="57" x2="68" y2="57" stroke="#C98BFF" strokeWidth="1.5" />
-    <line x1="34" y1="70" x2="66" y2="70" stroke="#C98BFF" strokeWidth="1.5" />
   </svg>
 );
 
@@ -39,34 +35,24 @@ const Level2Package: React.FC<Level2Props> = ({ onWin, onLose, timeLeft }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const lastPos = useRef<{ x: number, y: number } | null>(null);
 
+  // วาดข้อความเริ่มต้นลงบน Label สีขาว
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        ctx.fillStyle = '#ffffff'; // Label background
+        ctx.fillStyle = '#ffffff'; 
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         ctx.fillStyle = '#15173D';
-        ctx.font = 'bold 14px Prompt';
-        ctx.fillText('ส่งถึง: น.ส. ระวังตัว', 10, 30);
-        ctx.fillText('เลขที่ 456 หมู่บ้านปลอดภัย', 10, 55);
-        ctx.fillText('เบอร์: 09x-xxx-xxxx', 10, 80);
+        ctx.font = 'bold 16px Prompt';
+        ctx.fillText('ส่งถึง: น.ส. ระวังตัว', 20, 40);
+        ctx.font = '14px Prompt';
+        ctx.fillText('เลขที่ 456 หมู่บ้านปลอดภัย', 20, 70);
+        ctx.fillText('เบอร์: 09x-xxx-xxxx', 20, 100);
       }
     }
   }, []);
-
-  const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
-    setIsDragging(true);
-    const pos = getPos(e);
-    lastPos.current = pos;
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    lastPos.current = null;
-    checkErasePercent();
-  };
 
   const getPos = (e: React.MouseEvent | React.TouchEvent) => {
     const canvas = canvasRef.current;
@@ -75,9 +61,14 @@ const Level2Package: React.FC<Level2Props> = ({ onWin, onLose, timeLeft }) => {
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
     return {
-      x: clientX - rect.left,
-      y: clientY - rect.top
+      x: (clientX - rect.left) * (canvas.width / rect.width),
+      y: (clientY - rect.top) * (canvas.height / rect.height)
     };
+  };
+
+  const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
+    setIsDragging(true);
+    lastPos.current = getPos(e);
   };
 
   const handleMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
@@ -86,14 +77,20 @@ const Level2Package: React.FC<Level2Props> = ({ onWin, onLose, timeLeft }) => {
     const ctx = canvasRef.current.getContext('2d');
     if (ctx && lastPos.current) {
       ctx.beginPath();
-      ctx.strokeStyle = '#982598'; // Purple ink
-      ctx.lineWidth = 18;
+      ctx.strokeStyle = '#982598'; // สีปากกา (ม่วง)
+      ctx.lineWidth = 20;
       ctx.lineCap = 'round';
       ctx.moveTo(lastPos.current.x, lastPos.current.y);
       ctx.lineTo(pos.x, pos.y);
       ctx.stroke();
       lastPos.current = pos;
     }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    lastPos.current = null;
+    checkErasePercent();
   };
 
   const checkErasePercent = () => {
@@ -103,22 +100,23 @@ const Level2Package: React.FC<Level2Props> = ({ onWin, onLose, timeLeft }) => {
     if (!ctx) return;
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
-    let darkPixels = 0;
+    let purplePixels = 0;
+    
     for (let i = 0; i < data.length; i += 4) {
-      const r = data[i];
-      const g = data[i + 1];
-      const b = data[i + 2];
-      if (r < 160 && g < 50 && b > 140) { // Check for purple ink
-        darkPixels++;
+      const r = data[i], g = data[i + 1], b = data[i + 2];
+      // ตรวจสอบว่าพิกเซลเป็นสีม่วงปากกาหรือไม่
+      if (r > 100 && r < 180 && g < 80 && b > 120) {
+        purplePixels++;
       }
     }
     const totalPixels = canvas.width * canvas.height;
-    const percent = (darkPixels / (totalPixels * 0.4)) * 100;
+    const percent = (purplePixels / (totalPixels * 0.45)) * 100;
     setErasedPercent(Math.min(100, percent));
   };
 
   const handleThrow = () => {
-    if (erasedPercent > 75) {
+    // ถ้าขีดฆ่าไปมากกว่า 70% ถือว่าผ่าน
+    if (erasedPercent > 70) {
       onWin();
     } else {
       onLose();
@@ -126,50 +124,63 @@ const Level2Package: React.FC<Level2Props> = ({ onWin, onLose, timeLeft }) => {
   };
 
   useEffect(() => {
-    if (timeLeft <= 0) {
-      onLose();
-    }
+    if (timeLeft <= 0) onLose();
   }, [timeLeft, onLose]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full space-y-10 p-4">
-      <div className="relative">
-        <div className="w-80 h-64 bg-[#E491C9] rounded-xl shadow-2xl border-b-[12px] border-[#15173D]/30 flex flex-col items-center pt-8 overflow-hidden">
-          <div className="absolute top-0 w-full h-10 bg-[#15173D]/10" />
-          <div className="w-64 h-36 bg-white rounded-md border-2 border-[#15173D]/10 shadow-inner p-1 relative overflow-hidden">
-            <canvas 
-              ref={canvasRef}
-              width={256}
-              height={144}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onTouchStart={handleMouseDown}
-              onTouchMove={handleMouseMove}
-              onTouchEnd={handleMouseUp}
-              className="cursor-crosshair touch-none"
-            />
-          </div>
+    <div className="flex flex-col items-center justify-center h-full space-y-8 p-4">
+      
+      {/* Container ของกล่องพัสดุ */}
+      <div className="relative w-80 h-72 flex items-center justify-center">
+        
+        {/* 1. รูปภาพกล่องพัสดุ (Background) */}
+        <img 
+          src="/assets/images/package-box.PNG" // **ตรวจสอบชื่อไฟล์ในโฟลเดอร์ public ให้ตรงนะครับ**
+          alt="Package"
+          className="absolute inset-0 w-full h-full object-contain drop-shadow-2xl z-0"
+          onError={(e) => {
+            // ถ้าโหลดรูปไม่ขึ้น จะแสดงกล่องสีชมพูสำรองไว้
+            e.currentTarget.className = "absolute inset-0 w-full h-full bg-[#E491C9] rounded-2xl z-0";
+            e.currentTarget.src = ""; 
+          }}
+        />
+
+        {/* 2. ส่วนของจ่าหน้าซอง (Canvas) ที่ต้องระบายทับ */}
+        <div className="relative z-10 w-64 h-36 bg-white rounded shadow-inner overflow-hidden mt-4 border-2 border-black/5">
+          <canvas 
+            ref={canvasRef}
+            width={256}
+            height={144}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onTouchStart={handleMouseDown}
+            onTouchMove={handleMouseMove}
+            onTouchEnd={handleMouseUp}
+            className="cursor-crosshair touch-none w-full h-full"
+          />
         </div>
       </div>
 
-      <div className="w-full flex justify-center items-center gap-12">
-         <div className="cursor-default transition-transform active:scale-95">
+      {/* ส่วนควบคุม: ปากกา และ ปุ่มทิ้งลงถังขยะ */}
+      <div className="w-full flex justify-center items-center gap-16">
+         <div className="transition-transform hover:scale-110 active:rotate-12 cursor-pointer">
             <PencilIcon />
          </div>
 
          <button 
            onClick={handleThrow}
-           className="transition-transform active:scale-90"
+           className="transition-all hover:scale-110 active:scale-95 filter hover:brightness-110"
          >
             <TrashIcon />
          </button>
       </div>
 
-      <div className="bg-white/40 px-6 py-2 rounded-full border-2 border-[#E491C9]">
-         <span className="text-[#15173D] font-black text-sm uppercase tracking-wider italic">
-           มีอะไรที่ต้องจัดการไหม?
-         </span>
+      {/* แถบแจ้งเตือนสถานะ */}
+      <div className="bg-white/60 backdrop-blur-sm px-8 py-3 rounded-full border-2 border-[#982598]/30">
+          <span className="text-[#15173D] font-black text-sm uppercase tracking-widest italic">
+            {erasedPercent < 70 ? "ระบายทับชื่อ-ที่อยู่ให้มิดชิด!" : "ทำลายข้อมูลเรียบร้อย ทิ้งได้!"}
+          </span>
       </div>
     </div>
   );
