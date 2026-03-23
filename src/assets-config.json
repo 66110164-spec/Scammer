@@ -1,0 +1,22 @@
+{
+  "levels": {
+    "level_sms": {
+      "image": "/assets/images/ui-sms.png",
+      "video": "/assets/videos/bg-blue.mp4"
+    },
+    "level_parcel": {
+      "image": "/assets/images/ui-parcel.png"
+    },
+    "level_call": {
+      "image": "/assets/images/ui-call.png"
+    },
+    "level_meetup": {
+      "image": "/assets/images/ui-meetup.png"
+    }
+  },
+  "mascot": {
+    "idle": "/assets/images/mascot-idle.png",
+    "scared": "/assets/images/mascot-scared.png",
+    "happy": "/assets/images/mascot-happy.png"
+  }
+}
