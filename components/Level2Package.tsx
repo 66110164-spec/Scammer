@@ -1,12 +1,37 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Trash2, PenTool } from 'lucide-react';
 
 interface Level2Props {
   onWin: () => void;
   onLose: () => void;
   timeLeft: number;
 }
+
+const PencilIcon = () => (
+  <svg width="85" height="85" viewBox="0 0 100 100" className="drop-shadow-lg">
+    <circle cx="50" cy="50" r="48" fill="#C98BFF" />
+    <path d="M50 22L38 45L62 45L50 22Z" fill="white" />
+    <path d="M38 45L40 82C40 84 41 85 43 85H57C59 85 60 84 60 82L62 45H38Z" fill="#982598" />
+    <line x1="46" y1="45" x2="46" y2="85" stroke="#C98BFF" strokeWidth="2" strokeLinecap="round" />
+    <line x1="54" y1="45" x2="54" y2="85" stroke="#C98BFF" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
+
+const TrashIcon = () => (
+  <svg width="92" height="92" viewBox="0 0 100 100" className="drop-shadow-lg">
+    <circle cx="50" cy="50" r="48" fill="#C98BFF" />
+    {/* Lid */}
+    <path d="M30 29L45 19L70 24L60 36L30 29Z" fill="#982598" />
+    {/* Bin */}
+    <path d="M30 44L35 79C35 81 37 82 39 82H61C63 82 65 81 65 79L70 44H30Z" fill="#982598" />
+    {/* Grid lines */}
+    <line x1="40" y1="44" x2="43" y2="82" stroke="#C98BFF" strokeWidth="1.5" />
+    <line x1="50" y1="44" x2="50" y2="82" stroke="#C98BFF" strokeWidth="1.5" />
+    <line x1="60" y1="44" x2="57" y2="82" stroke="#C98BFF" strokeWidth="1.5" />
+    <line x1="32" y1="57" x2="68" y2="57" stroke="#C98BFF" strokeWidth="1.5" />
+    <line x1="34" y1="70" x2="66" y2="70" stroke="#C98BFF" strokeWidth="1.5" />
+  </svg>
+);
 
 const Level2Package: React.FC<Level2Props> = ({ onWin, onLose, timeLeft }) => {
   const [erasedPercent, setErasedPercent] = useState(0);
@@ -128,16 +153,16 @@ const Level2Package: React.FC<Level2Props> = ({ onWin, onLose, timeLeft }) => {
         </div>
       </div>
 
-      <div className="w-full flex justify-center items-center gap-8">
-         <div className="bg-[#982598]/10 p-4 rounded-full border-4 border-[#982598] shadow-lg cursor-default">
-            <PenTool size={32} className="text-[#982598]" />
+      <div className="w-full flex justify-center items-center gap-12">
+         <div className="cursor-default transition-transform active:scale-95">
+            <PencilIcon />
          </div>
 
          <button 
            onClick={handleThrow}
-           className="group bg-[#15173D] hover:bg-[#982598] p-6 rounded-full border-4 border-white shadow-xl transition-all active:scale-90"
+           className="transition-transform active:scale-90"
          >
-            <Trash2 size={48} className="text-white" />
+            <TrashIcon />
          </button>
       </div>
 
