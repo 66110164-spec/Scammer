@@ -1,93 +1,119 @@
 import React, { useState, useEffect } from 'react';
+import { ShieldAlert, Fingerprint, MailWarning } from 'lucide-react';
 
 interface Level1Props {
   onWin: () => void;
   onLose: () => void;
   timeLeft: number;
+  onTutorialToggle?: (isShowing: boolean) => void;
 }
 
-const Level1Link: React.FC<Level1Props> = ({ onWin, onLose, timeLeft }) => {
+const Level1Link: React.FC<Level1Props> = ({ onWin, onLose, timeLeft, onTutorialToggle }) => {
+  const [showTutorial, setShowTutorial] = useState(true);
+  const [tutorialTimer, setTutorialTimer] = useState(5);
   const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
-    if (timeLeft <= 0 && !isClicked) {
-      onWin();
-    }
-  }, [timeLeft, isClicked, onWin]);
+    if (onTutorialToggle) onTutorialToggle(showTutorial);
+  }, [showTutorial, onTutorialToggle]);
+
+  useEffect(() => {
+    if (showTutorial && tutorialTimer > 0) {
+      const timer = setTimeout(() => setTutorialTimer(tutorialTimer - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (tutorialTimer === 0) setShowTutorial(false);
+  }, [tutorialTimer, showTutorial]);
+
+  useEffect(() => {
+    if (timeLeft <= 0 && !isClicked && !showTutorial) onWin();
+  }, [timeLeft, isClicked, onWin, showTutorial]);
 
   const handleLinkClick = () => {
-    if (isClicked) return;
+    if (showTutorial || isClicked) return;
     setIsClicked(true);
     onLose();
   };
 
-  // ==========================================
-  // [ส่วนเพิ่มใหม่] CSS Inline Style สำหรับ Noise Texture
-  // คุณสามารถปรับค่า opacity (0.05) เพื่อคุมความชัดของเกรนได้ครับ
-  // ==========================================
-  const grainyTexture = {
-    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3%3C/filter%3%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0'/%3%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3%3C/svg%3%3E")`,
-    opacity: 0.1, // ความเข้มของเกรน (0-1)
-  };
-
   return (
-    // เปลี่ยนพื้นหลังหลักให้เป็น Gradient สีครีม-ชมพูอ่อน
-    <div className="flex flex-col items-center justify-center h-full space-y-8 p-4 bg-gradient-to-br from-[#F1E9E9] to-[#E491C9]/20 relative overflow-hidden">
-     
-      {/* [เพิ่มใหม่] ชั้น Noise Texture ทับพื้นหลังหลัก */}
-      <div className="absolute inset-0 z-0 pointer-events-none" style={grainyTexture}></div>
+    <div className="absolute inset-0 flex flex-col overflow-hidden">
+      
+      {/* --- 1. Full-Screen Tutorial (ใช้ fixed เพื่อทับทุกอย่างบนจอ) --- */}
+      {showTutorial && (
+        <div className="fixed inset-0 z-[999] bg-[#15173D] flex flex-col items-center justify-center p-8 text-center animate-in fade-in duration-300">
+          
+          {/* Grainy Texture & Glow */}
+          <div className="absolute inset-0 opacity-10 pointer-events-none" 
+               style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")` }} />
+          
+          <div className="relative z-10 flex flex-col items-center">
+            {/* Timer Circle */}
+            <div className="w-20 h-20 border-4 border-[#E491C9] rounded-full flex items-center justify-center text-[#F1E9E9] font-black text-3xl mb-8 shadow-[0_0_30px_rgba(228,145,201,0.4)]">
+              {tutorialTimer}
+            </div>
+            
+            <Fingerprint size={100} className="text-[#E491C9] mb-8 animate-pulse" />
+            
+            <h2 className="text-[#F1E9E9] text-5xl font-black italic mb-4 leading-[0.9] uppercase tracking-tighter">
+              DO NOT<br/><span className="text-[#E491C9]">TOUCH LINK</span>
+            </h2>
+            
+            <p className="text-[#F1E9E9]/60 text-sm font-bold uppercase tracking-[0.2em] italic mt-4">
+              ห้ามกดลิงก์แปลกปลอมเด็ดขาดจนกว่าเวลาจะหมด
+            </p>
+          </div>
+        </div>
+      )}
 
-      {/* --- ตัวโทรศัพท์ --- */}
-      {/* ปรับสีขอบให้ซอฟต์ลง และเพิ่ม Drop Shadow ฟุ้งๆ */}
-      <div className="relative bg-white/90 backdrop-blur-sm w-64 h-[440px] border-[10px] border-[#15173D]/90 rounded-[3rem] shadow-[0_20px_50px_-10px_rgba(152,37,152,0.3)] overflow-hidden flex flex-col z-10">
-       
-        {/* Phone Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-[#15173D]/90 rounded-b-xl z-10" />
-       
-        {/* Content */}
-        <div className="flex-1 bg-[#F1E9E9]/50 pt-10 px-4 space-y-4 relative">
-         
-          {/* [เพิ่มใหม่] Noise Texture เฉพาะข้างในหน้าจอโทรศัพท์ */}
-          <div className="absolute inset-0 z-0 opacity-5 pointer-events-none" style={grainyTexture}></div>
+      {/* --- 2. Game Content Area --- */}
+      <div className="flex-1 flex flex-col items-center justify-center p-4 space-y-6 bg-[#F1E9E9]">
+        
+        {/* Responsive Phone Mockup */}
+        <div className="w-full max-w-[320px] aspect-[9/14] bg-[#F1E9E9] rounded-[3rem] shadow-2xl flex flex-col overflow-hidden relative border-[6px] border-white/50">
+          
+          <div className="p-6 pt-10 flex-1 space-y-6 flex flex-col">
+            {/* Sender Info */}
+            <div className="flex items-center gap-3 bg-[#15173D]/5 p-3 rounded-2xl border border-[#15173D]/5">
+              <div className="w-10 h-10 bg-[#15173D] rounded-xl flex items-center justify-center text-[#E491C9] shrink-0 shadow-sm">
+                <MailWarning size={22} />
+              </div>
+              <div className="overflow-hidden text-left">
+                <p className="text-[#15173D] font-black text-[12px] uppercase truncate">หมายเลขที่ไม่รู้จัก</p>
+                <p className="text-[#15173D]/40 text-[10px] font-bold italic tracking-tighter">วันนี้ 10:30</p>
+              </div>
+            </div>
 
-          <div className="relative z-10">
-            <div className="text-center text-[10px] text-gray-400 font-bold mb-4">วันนี้ 10:30</div>
-           
-            {/* --- กล่องข้อความ (SMS Bubble) --- */}
-            {/* เปลี่ยนสีพื้นหลังเป็น Gradient สีม่วง-ชมพู พร้อมใส่เกรน */}
-            <div className="bg-gradient-to-br from-[#982598] to-[#E491C9] text-white p-5 rounded-3xl rounded-tl-none shadow-lg relative overflow-hidden border border-white/20">
-             
-              {/* [เพิ่มใหม่] Noise Texture ข้างในกล่องข้อความ */}
-              <div className="absolute inset-0 z-0 opacity-15 pointer-events-none" style={grainyTexture}></div>
-
-              <p className="relative z-10 text-xs font-bold leading-relaxed">
-                [แจ้งเตือน] บัญชีของคุณมีความเสี่ยง! กรุณายืนยันตัวตนทันทีเพื่อป้องกันการถูกระงับ
-                <span className="block mt-3 text-white/70">คลิก</span>
-                <span
-                  onClick={handleLinkClick}
-                  className="block text-white underline cursor-pointer hover:text-[#15173D] transition-colors py-2 break-all font-mono bg-black/10 px-2 rounded mt-1"
-                >
-                  https://bank-auth-security.io/v/123
-                </span>
+            {/* SMS Bubble: ขยายให้เด่นขึ้น */}
+            <div className="bg-gradient-to-tr from-[#982598] to-[#E491C9] p-6 rounded-[2rem] rounded-tl-none shadow-xl flex-1 flex flex-col justify-center">
+              <p className="text-white text-[16px] sm:text-[18px] font-black leading-tight italic mb-6">
+                พัสดุของคุณถูกระงับ!<br/>
+                <span className="text-[12px] font-medium not-italic opacity-90 block mt-1">กรุณายืนยันข้อมูลด่วน:</span>
               </p>
+              
+              {/* Fake Link Button */}
+              <div 
+                onClick={handleLinkClick} 
+                className="bg-[#15173D] p-4 rounded-xl border border-white/10 text-center cursor-pointer active:scale-95 transition-all shadow-lg hover:bg-[#1a1d4d]"
+              >
+                <span className="text-[#E491C9] text-[11px] font-mono font-black truncate block underline">
+                  bank-secure.io/v/123
+                </span>
+              </div>
+            </div>
+
+            {/* Decor Bottom Line */}
+            <div className="mt-4 flex justify-center">
+              <div className="w-16 h-1.5 bg-[#15173D]/10 rounded-full" />
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="bg-white p-4 border-t border-gray-100/50 z-10">
-          <div className="bg-gray-100 rounded-full py-2 px-4 text-gray-400 text-[10px] text-center border border-gray-200/50 font-bold">
-            ปัดขึ้นเพื่อปิด
-          </div>
+        {/* Level Indicator */}
+        <div className="flex items-center gap-2 opacity-30">
+          <ShieldAlert size={16} />
+          <span className="text-[10px] font-black uppercase tracking-widest italic text-[#15173D]">
+            
+          </span>
         </div>
-      </div>
-     
-      {/* --- แถบคำถามด้านล่าง --- */}
-      {/* ปรับให้เป็น Glassmorphism (ใสๆ ฟุ้งๆ) */}
-      <div className="bg-white/50 backdrop-blur-md px-8 py-3 rounded-full border border-white/20 shadow-lg z-10">
-         <span className="text-[#15173D] font-black text-sm uppercase tracking-widest italic animate-pulse">
-            คุณจะทำอย่างไร?
-         </span>
       </div>
     </div>
   );
