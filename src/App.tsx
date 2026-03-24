@@ -7,8 +7,8 @@ import Level4Meetup from './components/Level4Meetup';
 import ProgressBar from './components/ProgressBar';
 import Mascot from './components/Mascot';
 
-import { 
-  Play, RotateCcw, Heart, Award, ChevronRight, 
+import {
+  Play, RotateCcw, Heart, Award, ChevronRight,
   XCircle, PackageOpen, PhoneOff, ShieldX, DollarSign
 } from 'lucide-react';
 
@@ -18,10 +18,10 @@ const App: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState(10);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
-  
+
   // [เพิ่มจากระบบคำใบ้] สถานะหยุดเวลา
-  const [isPaused, setIsPaused] = useState(false); 
-  
+  const [isPaused, setIsPaused] = useState(false);
+
   const timerRef = useRef<number | null>(null);
   const currentLevel = LEVELS[currentLevelIdx];
 
@@ -91,8 +91,8 @@ const App: React.FC = () => {
   };
 
   const renderFailAnimation = (levelId: number) => {
-    if (levelId === 1) return <div className="..."><XCircle size={64}/></div>; // ย่อไว้
-    if (levelId === 2) return <div className="..."><PackageOpen size={72}/></div>;
+    if (levelId === 1) return <div className="..."><XCircle size={64} /></div>; // ย่อไว้
+    if (levelId === 2) return <div className="..."><PackageOpen size={72} /></div>;
     // ... (ส่วนที่เหลือคงเดิมตามโค้ดของคุณ)
     return null;
   };
@@ -102,11 +102,11 @@ const App: React.FC = () => {
       case GameState.START:
         return (
           <div className="flex flex-col items-center justify-center h-full space-y-8 px-8 text-center bg-[#F1E9E9]">
-             <Mascot className="w-64 h-64" state="happy" />
-             <h1 className="text-6xl font-black text-[#15173D]">SCAMMER 101</h1>
-             <button onClick={() => startLevel(0)} className="bg-[#15173D] text-white px-14 py-6 rounded-full font-black text-2xl">
-               เข้าชั้นเรียน
-             </button>
+            <Mascot className="w-64 h-64" state="happy" />
+            <h1 className="text-6xl font-black text-[#15173D]">SCAMMER 101</h1>
+            <button onClick={() => startLevel(0)} className="bg-[#15173D] text-white px-14 py-6 rounded-full font-black text-2xl">
+              เข้าชั้นเรียน
+            </button>
           </div>
         );
 
@@ -131,18 +131,25 @@ const App: React.FC = () => {
 
             <div className="flex-1 overflow-hidden relative">
               {currentLevelIdx === 0 && <Level1Link onWin={handleWinLevel} onLose={handleLoseLevel} timeLeft={timeLeft} />}
-              
+
               {/* --- แก้ไขการเรียกใช้งาน Level 2 --- */}
               {currentLevelIdx === 1 && (
-                <Level2Package 
-                  onWin={handleWinLevel} 
-                  onLose={handleLoseLevel} 
-                  timeLeft={timeLeft} 
+                <Level2Package
+                  onWin={handleWinLevel}
+                  onLose={handleLoseLevel}
+                  timeLeft={timeLeft}
                   onTutorialToggle={(isShowing) => setIsPaused(isShowing)} // ส่งฟังก์ชันไปหยุดเวลา
                 />
               )}
 
-              {currentLevelIdx === 2 && <Level3Call onWin={handleWinLevel} onLose={handleLoseLevel} timeLeft={timeLeft} />}
+              {currentLevelIdx === 2 && (
+                <Level3Call
+                  onWin={handleWinLevel}
+                  onLose={handleLoseLevel}
+                  timeLeft={timeLeft}
+                  onTutorialToggle={(isShowing) => setIsPaused(isShowing)} // จุดสำคัญ!
+                />
+              )}
               {currentLevelIdx === 3 && <Level4Meetup onWin={handleWinLevel} onLose={handleLoseLevel} timeLeft={timeLeft} />}
             </div>
           </div>
