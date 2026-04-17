@@ -6,6 +6,7 @@ import Level1Link from './components/Level1Link';
 import Level2Package from './components/Level2Package';
 import Level3Call from './components/Level3Call';
 import Level4Meetup from './components/Level4Meetup';
+import Level6TikTokScam from './components/Level6TikTokScam';
 import ProgressBar from './components/ProgressBar';
 import Mascot from './components/Mascot';
 import ScoreBoard from './components/ScoreBoard'; 
@@ -96,7 +97,7 @@ const App: React.FC = () => {
             </div>
 
             <button
-              onClick={() => startLevel(3)} //ไว้ Skip ด่าน
+              onClick={() => startLevel(8)} //ไว้ Skip ด่าน
               className="bg-[#15173D] text-white px-12 py-5 rounded-full font-black text-xl shadow-[0_10px_0_rgb(0,0,0,0.2)] active:shadow-none active:translate-y-1 transition-all w-full uppercase italic"
             >
               START CLASS

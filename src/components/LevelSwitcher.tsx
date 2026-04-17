@@ -4,8 +4,12 @@ import Level2Package from './Level2Package';
 import Level3Call from './Level3Call';
 import Level4Meetup from './Level4Meetup';
 import Level5MusicScam from './Level5MusicScam';
+import Level6TikTokScam from './Level6TikTokScam';
 import GenericLevel from './GenericLevel'; // สำหรับด่าน 5-46
 import { LEVELS } from '../data/levels';
+import Level7OrderScam from './Level7OrderScam';
+import Level8PackScam from './Level8PackScam';
+import Level9MuleAccount from './Level9MuleAccount';
 
 interface Props {
   levelIdx: number;
@@ -34,6 +38,38 @@ const LevelSwitcher: React.FC<Props> = (props) => {
         onTutorialToggle={props.onTutorialToggle}
       />
     );
+    if (props.levelIdx === 5) return (
+      <Level6TikTokScam 
+        onWin={props.onWin} 
+        onLose={props.onLose} 
+        timeLeft={props.timeLeft} 
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 6) return (
+  <Level7OrderScam 
+    onWin={props.onWin} 
+    onLose={props.onLose} 
+    timeLeft={props.timeLeft} 
+    onTutorialToggle={props.onTutorialToggle}
+  />
+);
+if (props.levelIdx === 7) return (
+  <Level8PackScam 
+    onWin={props.onWin} 
+    onLose={props.onLose} 
+    timeLeft={props.timeLeft} 
+    onTutorialToggle={props.onTutorialToggle}
+  />
+);
+if (props.levelIdx === 8) return (
+  <Level9MuleAccount 
+    onWin={props.onWin} 
+    onLose={props.onLose} 
+    timeLeft={props.timeLeft} 
+    onTutorialToggle={props.onTutorialToggle}
+  />
+);
   }
 
   // ถ้าเป็นด่าน CHOICE (5-46)

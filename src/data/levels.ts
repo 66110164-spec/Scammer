@@ -52,24 +52,17 @@ export const LEVELS: LevelConfig[] = [
 
   {
     id: 6,
-    title: "งานออนไลน์", // เพิ่ม title ที่ขาดไป
-    scamType: "หลอกฟังเพลงรับเงิน",
-    gameType: 'CHAT', 
-    duration: 10,
-    failTip: "งานออนไลน์ที่ต้องโอนมัดจำก่อนคือมิจฉาชีพ 100%",
-    content: {
-      question: "สนใจรับรายได้เสริมแค่ฟังเพลงไหมคะ? เพลงละ 20 บาท แต่ต้องโอนค่าประกันคิว 199 บาทค่ะ",
-      choices: [
-        { text: "โอนเงินเพื่อเริ่มงาน", isCorrect: false, feedback: "มิจฉาชีพมักอ้างค่าประกัน!" },
-        { text: "ไม่โอน งานจริงต้องไม่เสียเงิน", isCorrect: true, feedback: "ถูกต้อง! คุณรอดจากการโดนหลอก" }
-      ]
-    }
+  title: "ปั่นยอดวิวฉิวฉิว",
+  scamType: "Fake Engagement / VIP Scam",
+  gameType: 'SPECIAL',
+  duration: 10, // เวลาที่ให้เล่น (วินาที)
+  failTip: "อย่าหลงเชื่อหน้าม้าปั่นยอดวิว และห้ามโอนเงินเปิดงาน VIP เด็ดขาด!"
   },
   {
     id: 7,
     title: "หลอกกดไลค์ TikTok",
     scamType: "หลอกกดไลค์ TikTok",
-    gameType: 'DECISION',
+    gameType: 'SPECIAL',
     duration: 8,
     failTip: "มิจฉาชีพจะหลอกให้เติมเงินเพิ่มเรื่อยๆ เพื่อถอนเงินเก่า",
     content: {
@@ -84,7 +77,7 @@ export const LEVELS: LevelConfig[] = [
     id: 8,
     title: "ยืนยันออเดอร์ร้านออนไลน์",
     scamType: "ยืนยันออเดอร์ร้านออนไลน์",
-    gameType: 'CHAT',
+    gameType: 'SPECIAL',
     duration: 10,
     failTip: "การยืนยันออเดอร์ไม่ต้องใช้เงินมัดจำส่วนตัว",
     content: {
@@ -99,7 +92,7 @@ export const LEVELS: LevelConfig[] = [
     id: 9,
     title: "แพ็กสินค้าส่งต่างประเทศ",
     scamType: "แพ็กสินค้าส่งต่างประเทศ",
-    gameType: 'CHAT',
+    gameType: 'SPECIAL',
     duration: 10,
     failTip: "งานรายได้สูงเกินจริงมักเป็นกับดัก",
     content: {
