@@ -10,6 +10,10 @@ import { LEVELS } from '../data/levels';
 import Level7OrderScam from './Level7OrderScam';
 import Level8PackScam from './Level8PackScam';
 import Level9MuleAccount from './Level9MuleAccount';
+import Level10SimScam from './Level10SimScam';
+import Level11FaceScanScam from './Level11FaceScanScam';
+import Level12CallCenterHell from './Level12CallCenterHell';
+import Level13CryptoScam from './Level13CryptoScam';
 
 interface Props {
   levelIdx: number;
@@ -64,6 +68,38 @@ if (props.levelIdx === 7) return (
 );
 if (props.levelIdx === 8) return (
   <Level9MuleAccount 
+    onWin={props.onWin} 
+    onLose={props.onLose} 
+    timeLeft={props.timeLeft} 
+    onTutorialToggle={props.onTutorialToggle}
+  />
+);
+if (props.levelIdx === 9) return (
+  <Level10SimScam
+    onWin={props.onWin} 
+    onLose={props.onLose} 
+    timeLeft={props.timeLeft} 
+    onTutorialToggle={props.onTutorialToggle}
+  />
+  
+);if (props.levelIdx === 10) return (
+  <Level11FaceScanScam 
+    onWin={props.onWin} 
+    onLose={props.onLose} 
+    timeLeft={props.timeLeft} 
+    onTutorialToggle={props.onTutorialToggle}
+  />
+);
+if (props.levelIdx === 11) return (
+  <Level12CallCenterHell 
+    onWin={props.onWin} 
+    onLose={props.onLose} 
+    timeLeft={props.timeLeft} 
+    onTutorialToggle={props.onTutorialToggle}
+  />
+);
+if (props.levelIdx === 12) return (
+  <Level13CryptoScam 
     onWin={props.onWin} 
     onLose={props.onLose} 
     timeLeft={props.timeLeft} 

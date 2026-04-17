@@ -107,7 +107,7 @@ export const LEVELS: LevelConfig[] = [
     id: 10,
     title: "หลอกเปิดบัญชีธนาคาร (บัญชีม้า)",
     scamType: "หลอกเปิดบัญชีธนาคาร",
-    gameType: 'DECISION',
+    gameType: 'SPECIAL',
     duration: 12,
     failTip: "การเปิดบัญชีให้คนอื่นใช้มีโทษจำคุกและค่าปรับมหาศาล",
     content: {
@@ -122,7 +122,7 @@ export const LEVELS: LevelConfig[] = [
     id: 11,
     title: "หลอกเปิดซิมการ์ดใหม่",
     scamType: "หลอกเปิดซิมการ์ดใหม่",
-    gameType: 'DECISION',
+    gameType: 'SPECIAL',
     duration: 10,
     failTip: "ซิมการ์ดที่ชื่อเราถูกนำไปใช้ก่ออาชญากรรมได้",
     content: {
@@ -137,7 +137,7 @@ export const LEVELS: LevelConfig[] = [
     id: 12,
     title: "สแกนหน้าบัตรประชาชน",
     scamType: "สแกนหน้าบัตรประชาชน",
-    gameType: 'LINK',
+    gameType: 'SPECIAL',
     duration: 10,
     failTip: "ข้อมูลบัตรประชาชนสามารถนำไปสวมสิทธิ์ทำเรื่องผิดกฎหมายได้",
     content: {
@@ -152,7 +152,7 @@ export const LEVELS: LevelConfig[] = [
     id: 13,
     title: "ทำงานคอลเซนเตอร์ต่างประเทศ",
     scamType: "ทำงานคอลเซนเตอร์ต่างประเทศ",
-    gameType: 'CHAT',
+    gameType: 'SPECIAL',
     duration: 12,
     failTip: "การไปทำงานต่างประเทศผ่านช่องทางธรรมชาติเสี่ยงถูกกักขัง",
     content: {

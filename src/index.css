@@ -25,3 +25,13 @@
   display: inline-block;
   animation: villain-shake 0.15s ease-in-out infinite;
 }
+/* src/index.css หรือ src/App.css */
+@keyframes scanline {
+  0% { transform: translateY(0px); opacity: 0.1; }
+  50% { opacity: 0.3; }
+  100% { transform: translateY(260px); opacity: 0.1; }
+}
+
+.animate-scanline {
+  animation: scanline 2s linear infinite;
+}
