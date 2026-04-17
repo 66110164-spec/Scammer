@@ -1,0 +1,27 @@
+/* --- Animation สำหรับเบบี๋เต่า --- */
+@keyframes waddle {
+  0%, 100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+.animate-waddle {
+  display: inline-block;
+  animation: waddle 0.8s ease-in-out infinite;
+  transform-origin: bottom center; /* ให้หมุนจากฐานเท้า */
+}
+
+/* --- Animation สำหรับตัวร้าย Opossum (สั่นแบบเจ้าเล่ห์) --- */
+@keyframes villain-shake {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  25% { transform: translate(1px, -1px) rotate(1deg); }
+  75% { transform: translate(-1px, 1px) rotate(-1deg); }
+}
+
+.animate-villain {
+  display: inline-block;
+  animation: villain-shake 0.15s ease-in-out infinite;
+}

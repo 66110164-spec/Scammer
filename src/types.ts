@@ -6,41 +6,16 @@ export enum GameState {
   GAME_OVER = 'GAME_OVER'
 }
 
-export interface LevelInfo {
+export interface LevelConfig {
   id: number;
-  title: string;
+  title: string;       
+  scamType: string;    
   duration: number;
   failTip: string;
-  assetKey: string; // เพิ่มตัวนี้เพื่อใช้เชื่อมกับ Config
+  // เพิ่มค่าที่คุณใช้ใน levels.ts เข้าไปที่นี่
+  gameType: 'SPECIAL' | 'CHOICE' | 'CHAT' | 'LINK' | 'DECISION'; 
+  content?: {          
+    question: string;
+    choices: { text: string; isCorrect: boolean; feedback: string }[];
+  };
 }
-
-export const LEVELS: LevelInfo[] = [
-  {
-    id: 1,
-    title: "SMS แปลกปลอม",
-    duration: 10,
-    failTip: "ธนาคารจะไม่มีการแนบลิงก์ขอข้อมูลส่วนตัวหรือรหัสผ่านผ่าน SMS",
-    assetKey: "level_sms"
-  },
-  {
-    id: 2,
-    title: "กล่องพัสดุ",
-    duration: 10,
-    failTip: "ทำลายชื่อ ที่อยู่ และเบอร์โทรศัพท์บนกล่องพัสดุก่อนทิ้งเสมอ",
-    assetKey: "level_parcel"
-  },
-  {
-    id: 3,
-    title: "ใครโทรมา?",
-    duration: 8,
-    failTip: "อย่ารับสายเบอร์แปลกที่ไม่รู้จัก หรืออ้างว่าเป็นเจ้าหน้าที่รัฐโดยไม่มีการนัดหมาย",
-    assetKey: "level_call"
-  },
-  {
-    id: 4,
-    title: "นัดเจอคนแปลกหน้า",
-    duration: 8,
-    failTip: "อย่าไปพบคนแปลกหน้าในที่ลับตาคนเพียงลำพัง หรือควรนัดในที่สาธารณะ",
-    assetKey: "level_meetup"
-  }
-];

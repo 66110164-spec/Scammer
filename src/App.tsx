@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { GameState, LEVELS } from './types';
+import { LEVELS } from './data/levels';
+import { GameState } from './types';
+import LevelSwitcher from './components/LevelSwitcher';
 import Level1Link from './components/Level1Link';
 import Level2Package from './components/Level2Package';
 import Level3Call from './components/Level3Call';
@@ -94,7 +96,7 @@ const App: React.FC = () => {
             </div>
 
             <button
-              onClick={() => startLevel(0)}
+              onClick={() => startLevel(3)} //ไว้ Skip ด่าน
               className="bg-[#15173D] text-white px-12 py-5 rounded-full font-black text-xl shadow-[0_10px_0_rgb(0,0,0,0.2)] active:shadow-none active:translate-y-1 transition-all w-full uppercase italic"
             >
               START CLASS
@@ -126,11 +128,15 @@ const App: React.FC = () => {
               </h2>
             </div>
 
-            <div className="flex-1 relative mt-4 overflow-hidden rounded-t-[3.5rem] bg-[#15173D] shadow-[0_-15px_50px_rgba(0,0,0,0.2)]">
-              {currentLevelIdx === 0 && <Level1Link onWin={handleWinLevel} onLose={handleLoseLevel} timeLeft={timeLeft} onTutorialToggle={setIsPaused} />}
-              {currentLevelIdx === 1 && <Level2Package onWin={handleWinLevel} onLose={handleLoseLevel} timeLeft={timeLeft} onTutorialToggle={setIsPaused} />}
-              {currentLevelIdx === 2 && <Level3Call onWin={handleWinLevel} onLose={handleLoseLevel} timeLeft={timeLeft} onTutorialToggle={setIsPaused} />}
-              {currentLevelIdx === 3 && <Level4Meetup onWin={handleWinLevel} onLose={handleLoseLevel} timeLeft={timeLeft} onTutorialToggle={setIsPaused} />}
+            <div className="flex-1 relative mt-4 overflow-hidden rounded-t-[3.5rem] bg-[#15173D]">
+              {/* เรียกใช้ LevelSwitcher เพียงตัวเดียว */}
+              <LevelSwitcher 
+                levelIdx={currentLevelIdx}
+                onWin={handleWinLevel}
+                onLose={handleLoseLevel}
+                timeLeft={timeLeft}
+                onTutorialToggle={setIsPaused}
+              />
             </div>
           </div>
         );
