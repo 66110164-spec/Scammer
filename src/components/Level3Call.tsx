@@ -107,10 +107,10 @@ const Level3Call: React.FC<Level3Props> = ({ onWin, onLose, timeLeft, onTutorial
       )}
 
       {/* --- 2. Main Game Content --- */}
-      <div className="flex-1 flex flex-col items-center justify-center p-6 space-y-6">
+      <div className="flex-1 flex flex-col items-center justify-center p-6 space-y-4">
         
         {/* Progress Dots */}
-        <div className="flex space-x-3 mb-4">
+        <div className="flex space-x-3">
           {[...Array(TOTAL_CALLS)].map((_, i) => (
             <div 
               key={i} 
@@ -122,25 +122,25 @@ const Level3Call: React.FC<Level3Props> = ({ onWin, onLose, timeLeft, onTutorial
         </div>
 
         {/* Caller Card */}
-        <div className="w-full max-w-[320px] bg-white rounded-[3rem] p-8 shadow-2xl flex flex-col items-center text-center space-y-6 relative overflow-hidden border-[6px] border-white/50">
+        <div className="w-full max-w-[280px] bg-white rounded-[2.5rem] p-6 shadow-2xl flex flex-col items-center text-center space-y-4 relative overflow-hidden border-[6px] border-white/50">
           <div className="absolute top-0 w-full h-20 bg-[#F1E9E9]/50 -z-0" />
           
-          <div className="z-10 bg-[#15173D] p-5 rounded-[2rem] text-[#E491C9] shadow-xl animate-bounce">
-            <PhoneIncoming size={48} />
+          <div className="z-10 bg-[#15173D] p-4 rounded-[1.5rem] text-[#E491C9] shadow-xl animate-bounce">
+            <PhoneIncoming size={40} />
           </div>
           
-          <div className="z-10 space-y-2 min-h-[100px] flex flex-col justify-center">
-            <h3 className="text-3xl font-black text-[#15173D] tracking-tighter uppercase italic leading-none truncate w-full">
+          <div className="z-10 space-y-1 min-h-[80px] flex flex-col justify-center">
+            <h3 className="text-2xl font-black text-[#15173D] tracking-tighter uppercase italic leading-none truncate w-full">
               {currentCaller.name}
             </h3>
-            <p className="text-[#982598] font-black text-xl tracking-wider">{currentCaller.number}</p>
+            <p className="text-[#982598] font-black text-lg tracking-wider">{currentCaller.number}</p>
           </div>
           
           <div className="z-10 flex flex-col items-center">
             <div className="flex gap-1 mb-2">
                {[0,1,2].map(i => <div key={i} className="w-1.5 h-1.5 bg-[#15173D]/20 rounded-full animate-pulse" style={{animationDelay: `${i*0.2}s`}}/>)}
             </div>
-            <p className="text-gray-400 text-[10px] font-bold uppercase tracking-[0.3em]">Incoming Call</p>
+            <p className="text-gray-400 text-[9px] font-bold uppercase tracking-[0.2em]">Incoming Call</p>
           </div>
         </div>
 
