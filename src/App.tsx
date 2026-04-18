@@ -108,26 +108,30 @@ const App: React.FC = () => {
       case GameState.PLAYING:
         return (
           <div className="flex flex-col h-full bg-[#F1E9E9] relative">
-            <div className="p-6 pb-2 space-y-4 z-10">
-              <div className="flex justify-between items-center">
-                <div className="flex space-x-1">
-                  {[...Array(3)].map((_, i) => (
-                    <Heart key={i} size={22} className={i < lives ? 'text-red-500 fill-current' : 'text-gray-300'} />
-                  ))}
+            {!isPaused && (
+              <>
+                <div className="p-6 pb-2 space-y-4 z-10">
+                  <div className="flex justify-between items-center">
+                    <div className="flex space-x-1">
+                      {[...Array(3)].map((_, i) => (
+                        <Heart key={i} size={22} className={i < lives ? 'text-red-500 fill-current' : 'text-gray-300'} />
+                      ))}
+                    </div>
+                    <div className="bg-[#15173D] px-4 py-1 rounded-full text-[#F1E9E9] font-black text-xs">{score} PTS</div>
+                  </div>
+                  <ProgressBar progress={timeLeft / currentLevel.duration} />
                 </div>
-                <div className="bg-[#15173D] px-4 py-1 rounded-full text-[#F1E9E9] font-black text-xs">{score} PTS</div>
-              </div>
-              <ProgressBar progress={timeLeft / currentLevel.duration} />
-            </div>
 
-            <div className="text-center w-full pt-2 flex flex-col items-center justify-center">
-              <p className="text-[#15173D]/40 text-[10px] font-black uppercase tracking-[0.2em] leading-none mb-1">
-                บทที่ {currentLevel.id}
-              </p>
-              <h2 className="text-[#15173D] text-xl sm:text-2xl font-black italic uppercase leading-tight max-w-[80%]">
-                {currentLevel.title}
-              </h2>
-            </div>
+                <div className="text-center w-full pt-2 flex flex-col items-center justify-center">
+                  <p className="text-[#15173D]/40 text-[10px] font-black uppercase tracking-[0.2em] leading-none mb-1">
+                    บทที่ {currentLevel.id}
+                  </p>
+                  <h2 className="text-[#15173D] text-xl sm:text-2xl font-black italic uppercase leading-tight max-w-[80%]">
+                    {currentLevel.title}
+                  </h2>
+                </div>
+              </>
+            )}
 
             <div className="flex-1 relative mt-4 overflow-hidden rounded-t-[3.5rem] bg-[#15173D]">
               {/* เรียกใช้ LevelSwitcher เพียงตัวเดียว */}

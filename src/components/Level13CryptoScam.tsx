@@ -161,7 +161,7 @@ const Level13CryptoScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutoria
         </div>
         
         <div className="text-right">
-          <p className="text-white/40 font-black text-[10px] uppercase">รอดจากการเป็นเม่าใน...</p>
+          <p className="text-white/40 font-black text-[10px] uppercase">รอดจากการถูกหลอกใน...</p>
           <p className="text-white font-black text-3xl italic">{Math.ceil(timeLeft)}s</p>
         </div>
       </div>

@@ -150,8 +150,8 @@ export const LEVELS: LevelConfig[] = [
   },
   {
     id: 13,
-    title: "ทำงานคอลเซนเตอร์ต่างประเทศ",
-    scamType: "ทำงานคอลเซนเตอร์ต่างประเทศ",
+    title: "Crypto Scam",
+    scamType: "Crypto Scam",
     gameType: 'SPECIAL',
     duration: 12,
     failTip: "การไปทำงานต่างประเทศผ่านช่องทางธรรมชาติเสี่ยงถูกกักขัง",
