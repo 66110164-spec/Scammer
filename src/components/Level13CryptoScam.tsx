@@ -64,12 +64,12 @@ const Level13CryptoScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutoria
       gameFrame.current++;
 
       // สร้างปุ่มฝากเงิน (Obstacles)
-      if (gameFrame.current % 100 === 0) {
+      if (gameFrame.current % 120 === 0) {
         setObstacles(prev => [...prev, { id: obstacleId.current++, x: 110 }]);
       }
 
       setObstacles(prev => {
-        const next = prev.map(ob => ({ ...ob, x: ob.x - 1.2 })); // ความเร็วของปุ่ม
+        const next = prev.map(ob => ({ ...ob, x: ob.x - 0.9 })); // ความเร็วของปุ่ม (ปรับให้ช้าลง)
         
         // Check Collision
         const hit = next.find(ob => ob.x > 15 && ob.x < 35 && charY < 40);
@@ -180,7 +180,7 @@ const Level13CryptoScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutoria
       {/* Floating Labels */}
       {!isCrashed && !showTutorial && (
         <div className="absolute top-1/2 right-10 opacity-30 animate-pulse pointer-events-none">
-          <p className="text-white font-black text-6xl italic rotate-12">TO THE MOON! 🚀</p>
+          <p className="text-white font-black text-6xl italic rotate-12">Becareful!!</p>
         </div>
       )}
 
