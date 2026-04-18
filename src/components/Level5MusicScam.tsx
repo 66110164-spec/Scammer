@@ -50,6 +50,7 @@ const Level5MusicScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutorialT
     }
   }, [tutorialTimer, showTutorial, onTutorialToggle]);
 
+  
   // ตรวจแพ้เมื่อเวลาหลัก (Bar) หมด
   useEffect(() => {
     if (!showTutorial && timeLeft <= 0) onLose();
