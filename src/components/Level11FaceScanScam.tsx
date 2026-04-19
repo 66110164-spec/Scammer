@@ -7,6 +7,7 @@ interface Props {
   onLose: () => void;
   timeLeft: number;
   onTutorialToggle: (isShowing: boolean) => void;
+  onRetry: () => void;
 }
 
 const Level10FaceScanScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutorialToggle }) => {

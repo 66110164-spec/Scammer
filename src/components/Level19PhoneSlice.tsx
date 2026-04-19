@@ -7,6 +7,7 @@ interface Props {
   onLose: () => void;
   timeLeft: number;
   onTutorialToggle: (isShowing: boolean) => void;
+  onRetry: () => void; // เพิ่มฟังก์ชันให้กดเริ่มใหม่
 }
 
 const Level19PhoneSliceClick: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutorialToggle }) => {
