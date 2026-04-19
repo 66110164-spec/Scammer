@@ -167,7 +167,7 @@ export const LEVELS: LevelConfig[] = [
     id: 14,
     title: "ชวนลงทุนคริปโต",
     scamType: "ชวนลงทุนคริปโต",
-    gameType: 'DECISION',
+    gameType: 'SPECIAL',
     duration: 10,
     failTip: "ไม่มีการลงทุนใดที่การันตีผลตอบแทนสูงในเวลาอันสั้น",
     content: {
@@ -182,7 +182,7 @@ export const LEVELS: LevelConfig[] = [
     id: 15,
     title: "Romance Scam (หลอกให้รัก)",
     scamType: "Romance Scam (หลอกให้รัก)",
-    gameType: 'CHAT',
+    gameType: 'SPECIAL',
     duration: 15,
     failTip: "คนที่รักกันจริงจะไม่ขอเงินผ่านแชททั้งที่ยังไม่เคยเจอหน้า",
     content: {
@@ -197,7 +197,7 @@ export const LEVELS: LevelConfig[] = [
     id: 16,
     title: "อ้างตำรวจขู่มีคดีฟอกเงิน",
     scamType: "อ้างตำรวจขู่มีคดีฟอกเงิน",
-    gameType: 'CHAT',
+    gameType: 'SPECIAL',
     duration: 12,
     failTip: "ตำรวจจริงจะไม่สอบสวนผ่านวิดีโอคอลหรือขอตรวจสอบเงินในบัญชี",
     content: {
@@ -212,7 +212,7 @@ export const LEVELS: LevelConfig[] = [
     id: 17,
     title: "ทำภารกิจรับรางวัลใหญ่",
     scamType: "ทำภารกิจรับรางวัลใหญ่",
-    gameType: 'DECISION',
+    gameType: 'SPECIAL',
     duration: 10,
     failTip: "การรับรางวัลไม่ต้องจ่ายค่าธรรมเนียมล่วงหน้า",
     content: {
@@ -227,7 +227,7 @@ export const LEVELS: LevelConfig[] = [
     id: 18,
     title: "ขายของออนไลน์ไม่ตรงปก",
     scamType: "ขายของออนไลน์ไม่ตรงปก",
-    gameType: 'LINK',
+    gameType: 'SPECIAL',
     duration: 10,
     failTip: "ควรเลือกซื้อจากร้านที่น่าเชื่อถือหรือมีการรับประกันคืนเงิน",
     content: {
@@ -242,7 +242,7 @@ export const LEVELS: LevelConfig[] = [
     id: 19,
     title: "จองโรงแรมราคาถูกเกินจริง",
     scamType: "จองโรงแรมราคาถูกเกินจริง",
-    gameType: 'DECISION',
+    gameType: 'SPECIAL',
     duration: 10,
     failTip: "มิจฉาชีพมักสร้างเพจปลอมเลียนแบบโรงแรมดัง",
     content: {
@@ -257,7 +257,7 @@ export const LEVELS: LevelConfig[] = [
     id: 20,
     title: "ซื้อตั๋วเครื่องบินถูก",
     scamType: "ซื้อตั๋วเครื่องบินถูก",
-    gameType: 'LINK',
+    gameType: 'SPECIAL',
     duration: 10,
     failTip: "ควรซื้อผ่านเว็บไซต์ทางการของสายการบินเท่านั้น",
     content: {

@@ -14,6 +14,14 @@ import Level10SimScam from './Level10SimScam';
 import Level11FaceScanScam from './Level11FaceScanScam';
 import Level12CallCenterHell from './Level12CallCenterHell';
 import Level13CryptoScam from './Level13CryptoScam';
+import Level14RomanceScam from './Level14RomanceScam';
+import Level15FakePolice from './Level15FakePolice';
+import Level16QuickSensor from './Level16QuickSensor';
+import Level17LiveLocation from './Level17LiveLocation';
+import Level18PrivacyCurtain from './Level18PrivacyCurtain';
+import Level19PhoneSlice from './Level19PhoneSlice';
+import Level20QRBlackout from './Level20QRBlackout';
+
 
 interface Props {
   levelIdx: number;
@@ -32,91 +40,146 @@ const LevelSwitcher: React.FC<Props> = (props) => {
     if (props.levelIdx === 1) return <Level2Package {...props} />;
     if (props.levelIdx === 2) return <Level3Call {...props} />;
     if (props.levelIdx === 3) return <Level4Meetup {...props} />;
-    
+
     // สำหรับด่าน 5: ส่งเฉพาะสิ่งที่ Level5MusicScam ต้องการ
     if (props.levelIdx === 4) return (
-      <Level5MusicScam 
-        onWin={props.onWin} 
-        onLose={props.onLose} 
-        timeLeft={props.timeLeft} 
+      <Level5MusicScam
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
         onTutorialToggle={props.onTutorialToggle}
       />
     );
     if (props.levelIdx === 5) return (
-      <Level6TikTokScam 
-        onWin={props.onWin} 
-        onLose={props.onLose} 
-        timeLeft={props.timeLeft} 
+      <Level6TikTokScam
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
         onTutorialToggle={props.onTutorialToggle}
       />
     );
     if (props.levelIdx === 6) return (
-  <Level7OrderScam 
-    onWin={props.onWin} 
-    onLose={props.onLose} 
-    timeLeft={props.timeLeft} 
-    onTutorialToggle={props.onTutorialToggle}
-  />
-);
-if (props.levelIdx === 7) return (
-  <Level8PackScam 
-    onWin={props.onWin} 
-    onLose={props.onLose} 
-    timeLeft={props.timeLeft} 
-    onTutorialToggle={props.onTutorialToggle}
-  />
-);
-if (props.levelIdx === 8) return (
-  <Level9MuleAccount 
-    onWin={props.onWin} 
-    onLose={props.onLose} 
-    timeLeft={props.timeLeft} 
-    onTutorialToggle={props.onTutorialToggle}
-  />
-);
-if (props.levelIdx === 9) return (
-  <Level10SimScam
-    onWin={props.onWin} 
-    onLose={props.onLose} 
-    timeLeft={props.timeLeft} 
-    onTutorialToggle={props.onTutorialToggle}
-  />
-  
-);if (props.levelIdx === 10) return (
-  <Level11FaceScanScam 
-    onWin={props.onWin} 
-    onLose={props.onLose} 
-    timeLeft={props.timeLeft} 
-    onTutorialToggle={props.onTutorialToggle}
-  />
-);
-if (props.levelIdx === 11) return (
-  <Level12CallCenterHell 
-    onWin={props.onWin} 
-    onLose={props.onLose} 
-    timeLeft={props.timeLeft} 
-    onTutorialToggle={props.onTutorialToggle}
-  />
-);
-if (props.levelIdx === 12) return (
-  <Level13CryptoScam 
-    onWin={props.onWin} 
-    onLose={props.onLose} 
-    timeLeft={props.timeLeft} 
-    onTutorialToggle={props.onTutorialToggle}
-  />
-);
-  }
+      <Level7OrderScam
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 7) return (
+      <Level8PackScam
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 8) return (
+      <Level9MuleAccount
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 9) return (
+      <Level10SimScam
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
 
+    ); if (props.levelIdx === 10) return (
+      <Level11FaceScanScam
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 11) return (
+      <Level12CallCenterHell
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 12) return (
+      <Level13CryptoScam
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 13) return (
+      <Level14RomanceScam
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 14) return (
+      <Level15FakePolice
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 15) return (
+      <Level16QuickSensor
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 16) return (
+      <Level17LiveLocation
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 17) return (
+      <Level18PrivacyCurtain
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 18) return (
+      <Level19PhoneSlice
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+    if (props.levelIdx === 19) return (
+      <Level20QRBlackout
+        onWin={props.onWin}
+        onLose={props.onLose}
+        timeLeft={props.timeLeft}
+        onTutorialToggle={props.onTutorialToggle}
+      />
+    );
+  }
   // ถ้าเป็นด่าน CHOICE (5-46)
-return (
-    <GenericLevel 
+  return (
+    <GenericLevel
       key={props.levelIdx}
       levelData={currentLevel} // ต้องส่งข้อมูลคำถามของด่านปัจจุบันเข้าไปด้วย
-      onWin={props.onWin} 
-      onLose={props.onLose} 
-      timeLeft={props.timeLeft} 
-      onTutorialToggle={props.onTutorialToggle} 
+      onWin={props.onWin}
+      onLose={props.onLose}
+      timeLeft={props.timeLeft}
+      onTutorialToggle={props.onTutorialToggle}
     />
   );
 };

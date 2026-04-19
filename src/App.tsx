@@ -97,7 +97,7 @@ const App: React.FC = () => {
             </div>
 
             <button
-              onClick={() => startLevel(0)} //ไว้ Skip ด่าน
+              onClick={() => startLevel(19)} //ไว้ Skip ด่าน
               className="bg-[#15173D] text-white px-12 py-5 rounded-full font-black text-xl shadow-[0_10px_0_rgb(0,0,0,0.2)] active:shadow-none active:translate-y-1 transition-all w-full uppercase italic"
             >
               START CLASS
