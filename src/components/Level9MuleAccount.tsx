@@ -74,13 +74,13 @@ const Level9MuleAccount: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutoria
         {/* ATM Glow Effect */}
         <div className="absolute inset-0 bg-gradient-to-b from-amber-500/10 to-transparent pointer-events-none" />
 
-        <div className="w-full max-w-sm bg-black border-4 border-slate-700 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+        <div className="w-full max-w-xs bg-black border-4 border-slate-700 rounded-3xl p-4 shadow-2xl relative overflow-hidden">
           {/* Screen Content */}
-          <div className="bg-[#101827] border-2 border-emerald-500/30 rounded-xl p-6 min-h-[200px] flex flex-col items-center justify-center text-center">
+          <div className="bg-[#101827] border-2 border-emerald-500/30 rounded-xl p-4 min-h-[160px] flex flex-col items-center justify-center text-center">
             {isShowingPin ? (
               <div className="animate-in fade-in duration-500">
                 <p className="text-emerald-500 font-bold text-xs uppercase mb-2 tracking-widest">จำรหัสถอนเงินม้า</p>
-                <h2 className="text-white text-5xl font-black tracking-[0.2em] shadow-emerald-500/50 drop-shadow-md">
+                <h2 className="text-white text-4xl font-black tracking-[0.2em] shadow-emerald-500/50 drop-shadow-md">
                   {targetPin}
                 </h2>
                 <div className="mt-4 h-1 w-full bg-white/10 rounded-full overflow-hidden">
@@ -92,7 +92,7 @@ const Level9MuleAccount: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutoria
                 <p className="text-amber-500 font-bold text-xs uppercase mb-4 italic">! ป้อนรหัส 6 หลักเพื่อรับเงิน !</p>
                 <div className="flex gap-2">
                   {[...Array(6)].map((_, i) => (
-                    <div key={i} className={`w-10 h-14 border-2 rounded-lg flex items-center justify-center text-2xl font-black
+                    <div key={i} className={`w-8 h-12 border-2 rounded-lg flex items-center justify-center text-xl font-black
                       ${userInput.length > i ? "border-emerald-500 text-white bg-emerald-500/20" : "border-slate-700 text-slate-700"}`}>
                       {userInput[i] ? "*" : ""}
                     </div>
@@ -104,15 +104,15 @@ const Level9MuleAccount: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutoria
           
           {/* Card Slot Decor */}
           <div className="mt-4 flex justify-between items-center opacity-40">
-            <div className="w-20 h-1 bg-slate-800 rounded" />
-            <CreditCard size={24} className="text-slate-600" />
-            <div className="w-20 h-1 bg-slate-800 rounded" />
+            <div className="w-16 h-1 bg-slate-800 rounded" />
+            <CreditCard size={20} className="text-slate-600" />
+            <div className="w-16 h-1 bg-slate-800 rounded" />
           </div>
         </div>
       </div>
 
       {/* --- Keypad Area (Bottom) --- */}
-      <div className="bg-[#0F172A] p-6 pb-12 rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.5)] border-t border-slate-800">
+      <div className="bg-[#0F172A] p-6 pb-8 rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.5)] border-t border-slate-800">
         <div className="grid grid-cols-3 gap-3 max-w-[280px] mx-auto">
           {["1", "2", "3", "4", "5", "6", "7", "8", "9", "CLR", "0", "OK"].map((btn) => (
             <button
@@ -122,7 +122,7 @@ const Level9MuleAccount: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutoria
                 else if (btn === "OK") return;
                 else handleKeypadClick(btn);
               }}
-              className={`h-16 rounded-2xl font-black text-xl transition-all active:scale-90 flex items-center justify-center
+              className={`h-14 rounded-2xl font-black text-xl transition-all active:scale-90 flex items-center justify-center
                 ${btn === "CLR" ? "bg-rose-500/20 text-rose-500" : 
                   btn === "OK" ? "bg-emerald-500/20 text-emerald-500" : 
                   "bg-slate-800 text-white border-b-4 border-black"}`}

@@ -9,44 +9,61 @@ import { Heart, Award, XCircle } from 'lucide-react';
 
 const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>(GameState.START);
-  const [currentLevelIdx, setCurrentLevelIdx] = useState(0);
+  const [sequenceIdx, setSequenceIdx] = useState(0); // ตำแหน่งในลำดับที่สุ่ม
+  const [randomizedLevels, setRandomizedLevels] = useState<number[]>([]); // ลำดับด่านที่สุ่มแล้ว
   const [timeLeft, setTimeLeft] = useState(10);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [isPaused, setIsPaused] = useState(false);
   const [userName, setUserName] = useState("Player");
   const [userAge, setUserAge] = useState(20);
-
+  
   const timerRef = useRef<number | null>(null);
+  
+  // ดึงข้อมูลด่านปัจจุบันจากลำดับที่สุ่มไว้
+  const currentLevelIdx = randomizedLevels[sequenceIdx];
   const currentLevel = LEVELS[currentLevelIdx];
-
-  const startLevel = (idx: number) => {
-    setCurrentLevelIdx(idx);
-    setTimeLeft(LEVELS[idx].duration);
+  
+  // ฟังก์ชันสุ่ม Array (Fisher-Yates shuffle)
+  const shuffleArray = (array: any[]) => {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+  };
+  
+  const startLevel = (levelIndex: number) => {
+    setTimeLeft(LEVELS[levelIndex].duration);
     setGameState(GameState.PLAYING);
     setIsPaused(false);
   };
-
+  
+  const startGame = () => {
+    const levelIndices = LEVELS.map((_, i) => i);
+    const shuffled = shuffleArray(levelIndices);
+    setRandomizedLevels(shuffled);
+    setSequenceIdx(0);
+    startLevel(shuffled[0]);
+  };
+  
   const handleWinLevel = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
-
-    // 1. เพิ่มคะแนน
     setScore(s => s + 100);
-
-    // 2. เช็คว่ามีด่านถัดไปหรือไม่
-    const nextLevelIdx = currentLevelIdx + 1;
-
-    if (nextLevelIdx < LEVELS.length) {
-      // ถ้ายังมีด่านถัดไป ให้เริ่มด่านนั้นเลย
-      startLevel(nextLevelIdx);
+    
+    const nextSequenceIdx = sequenceIdx + 1;
+    if (nextSequenceIdx < randomizedLevels.length) {
+      setSequenceIdx(nextSequenceIdx);
+      startLevel(randomizedLevels[nextSequenceIdx]);
     } else {
-      // ถ้าไม่มีด่านแล้ว ให้ไปหน้าจบเกม
       setGameState(GameState.GAME_OVER);
     }
-  }, [currentLevelIdx, startLevel]); // ใช้ startLevel ที่เรามีอยู่แล้ว
+  }, [sequenceIdx, randomizedLevels]);
+  
   const handleLoseLevel = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
-
     setLives(prevLives => {
       const newLives = prevLives - 1;
 
@@ -54,19 +71,16 @@ const App: React.FC = () => {
       if (newLives <= 0) {
         setGameState(GameState.GAME_OVER);
       } else {
-        // ถ้ายังมีหัวใจ ให้ไปหน้า LOSE_LEVEL (หน้าจอแจ้งว่าแพ้)
-        // เพื่อให้ผู้เล่นเห็นหน้าจอแพ้ แล้วค่อยกด "ลองใหม่"
         setGameState(GameState.LOSE_LEVEL);
       }
-
       return newLives;
     });
   }, []);
 
-  // ฟังก์ชันรีเซ็ตที่ถูกต้อง (แก้ Error เดิม)
+  // เมื่อกด "ลองใหม่" จะเริ่มด่านเดิมในลำดับที่สุ่มไว้
   const handleRetry = useCallback(() => {
-    startLevel(currentLevelIdx);
-  }, [currentLevelIdx]);
+    startLevel(randomizedLevels[sequenceIdx]);
+  }, [randomizedLevels, sequenceIdx]);
 
   useEffect(() => {
     if (gameState === GameState.PLAYING && !isPaused) {
@@ -89,10 +103,10 @@ const App: React.FC = () => {
     if (lives <= 0) {
       setGameState(GameState.GAME_OVER);
     } else if (gameState === GameState.LOSE_LEVEL) {
-      startLevel(currentLevelIdx);
+      handleRetry(); // ใช้ handleRetry เพื่อเริ่มด่านเดิม
     } else {
-      if (currentLevelIdx < LEVELS.length - 1) startLevel(currentLevelIdx + 1);
-      else setGameState(GameState.GAME_OVER);
+      // ส่วนนี้ไม่น่าจะถูกเรียกใช้แล้ว แต่เก็บไว้เผื่อ
+      handleWinLevel();
     }
   };
   const toggleFullscreen = () => {
@@ -117,7 +131,7 @@ const App: React.FC = () => {
               <input type="number" placeholder="อายุ" className="p-4 rounded-2xl border-2 border-[#15173D] font-bold" onChange={(e) => setUserAge(Number(e.target.value))} />
             </div>
 
-            <button onClick={() => startLevel(0)} className="bg-[#15173D] text-white px-12 py-5 rounded-full font-black text-xl w-full max-w-sm uppercase italic">
+            <button onClick={startGame} className="bg-[#15173D] text-white px-12 py-5 rounded-full font-black text-xl w-full max-w-sm uppercase italic">
               START CLASS
             </button>
 
@@ -130,7 +144,7 @@ const App: React.FC = () => {
 
       case GameState.PLAYING:
         return (
-          <div className="flex flex-col h-full w-full bg-[#F1E9E9] relative overflow-hidden">
+          <div className="flex flex-col h-full w-full bg-[#F1E9E9] relative overflow-hidden"> 
             {!isPaused && (
               <div className="flex-none p-6 pb-2 space-y-3 z-10">
                 <div className="flex justify-between items-center">
@@ -158,7 +172,7 @@ const App: React.FC = () => {
                 onLose={handleLoseLevel}
                 timeLeft={timeLeft}
                 onTutorialToggle={setIsPaused}
-                onRetry={() => startLevel(currentLevelIdx)}
+                onRetry={handleRetry}
               />
             </div>
           </div>
@@ -191,7 +205,7 @@ const App: React.FC = () => {
             onRestart={() => {
               setScore(0);       // Reset คะแนน
               setLives(3);       // Reset หัวใจ
-              startLevel(0);     // เริ่มด่านที่ 0 ใหม่ (แทนการไป START)
+              startGame();       // เริ่มเกมใหม่พร้อมสุ่มลำดับใหม่
             }}
           />
         );
