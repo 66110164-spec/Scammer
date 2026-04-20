@@ -29,14 +29,38 @@ const App: React.FC = () => {
 
   const handleWinLevel = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
-    setScore(s => s + Math.ceil(timeLeft * 10) + 150);
-    setGameState(GameState.WIN_LEVEL);
-  }, [timeLeft]);
 
+    // 1. เพิ่มคะแนน
+    setScore(s => s + 100);
+
+    // 2. เช็คว่ามีด่านถัดไปหรือไม่
+    const nextLevelIdx = currentLevelIdx + 1;
+
+    if (nextLevelIdx < LEVELS.length) {
+      // ถ้ายังมีด่านถัดไป ให้เริ่มด่านนั้นเลย
+      startLevel(nextLevelIdx);
+    } else {
+      // ถ้าไม่มีด่านแล้ว ให้ไปหน้าจบเกม
+      setGameState(GameState.GAME_OVER);
+    }
+  }, [currentLevelIdx, startLevel]); // ใช้ startLevel ที่เรามีอยู่แล้ว
   const handleLoseLevel = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
-    setLives(l => l - 1);
-    setGameState(GameState.LOSE_LEVEL);
+
+    setLives(prevLives => {
+      const newLives = prevLives - 1;
+
+      // ถ้าหัวใจหมดแล้วจริงๆ ให้ไปหน้า GAME_OVER
+      if (newLives <= 0) {
+        setGameState(GameState.GAME_OVER);
+      } else {
+        // ถ้ายังมีหัวใจ ให้ไปหน้า LOSE_LEVEL (หน้าจอแจ้งว่าแพ้)
+        // เพื่อให้ผู้เล่นเห็นหน้าจอแพ้ แล้วค่อยกด "ลองใหม่"
+        setGameState(GameState.LOSE_LEVEL);
+      }
+
+      return newLives;
+    });
   }, []);
 
   // ฟังก์ชันรีเซ็ตที่ถูกต้อง (แก้ Error เดิม)
@@ -164,7 +188,11 @@ const App: React.FC = () => {
             name={userName}
             age={userAge}
             score={score}
-            onRestart={() => { setScore(0); setLives(0); setGameState(GameState.START); }}
+            onRestart={() => {
+              setScore(0);       // Reset คะแนน
+              setLives(3);       // Reset หัวใจ
+              startLevel(0);     // เริ่มด่านที่ 0 ใหม่ (แทนการไป START)
+            }}
           />
         );
 
@@ -172,15 +200,15 @@ const App: React.FC = () => {
     }
   };
 
-return (
+  return (
     <div className="flex items-center justify-center min-h-[100dvh] bg-[#0A0B1A] p-0 sm:p-4 touch-none">
       <div className="relative w-full max-w-[430px] h-[100dvh] sm:h-[92vh] bg-[#F1E9E9] sm:rounded-[3rem] shadow-2xl flex flex-col overflow-hidden pointer-events-auto">
-        
+
         {/* Notch */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-[#15173D]/10 rounded-b-2xl z-[50] pointer-events-none" />
-        
+
         {/* Main Content Area */}
-        <div className="flex-1 relative overflow-hidden">
+        <div className="flex-1 relative overflow-y-auto">
           {renderContent()}
         </div>
       </div>
