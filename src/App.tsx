@@ -164,7 +164,7 @@ const App: React.FC = () => {
             name={userName}
             age={userAge}
             score={score}
-            onRestart={() => { setScore(0); setLives(3); setGameState(GameState.START); }}
+            onRestart={() => { setScore(0); setLives(0); setGameState(GameState.START); }}
           />
         );
 

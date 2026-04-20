@@ -34,27 +34,27 @@ const Level7OrderScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutorialT
 
   // --- PART 3: TIMING LOGIC (ลูกศรวิ่ง) ---
   useEffect(() => {
-  if (showTutorial) return;
+    if (showTutorial) return;
 
-  const moveMarker = setInterval(() => {
-    setMarkerPos((prev) => {
-      // ถ้าชนขอบขวา (98%) ให้เปลี่ยนทิศทางเป็นลบ (-1)
-      if (prev >= 98 && direction === 1) {
-        setDirection(-1);
-        return 98;
-      }
-      // ถ้าชนขอบซ้าย (2%) ให้เปลี่ยนทิศทางเป็นบวก (1)
-      if (prev <= 2 && direction === -1) {
-        setDirection(1);
-        return 2;
-      }
-      // ขยับค่าตำแหน่ง
-      return prev + (speed * direction);
-    });
-  }, 16); // 16ms ประมาณ 60 FPS
+    const moveMarker = setInterval(() => {
+      setMarkerPos((prev) => {
+        // ถ้าชนขอบขวา (98%) ให้เปลี่ยนทิศทางเป็นลบ (-1)
+        if (prev >= 98 && direction === 1) {
+          setDirection(-1);
+          return 98;
+        }
+        // ถ้าชนขอบซ้าย (2%) ให้เปลี่ยนทิศทางเป็นบวก (1)
+        if (prev <= 2 && direction === -1) {
+          setDirection(1);
+          return 2;
+        }
+        // ขยับค่าตำแหน่ง
+        return prev + (speed * direction);
+      });
+    }, 16); // 16ms ประมาณ 60 FPS
 
-  return () => clearInterval(moveMarker);
-}, [showTutorial, direction]); // ขึ้นอยู่กับ showTutorial และ direction
+    return () => clearInterval(moveMarker);
+  }, [showTutorial, direction]); // ขึ้นอยู่กับ showTutorial และ direction
 
   // เช็คเวลาหมด
   useEffect(() => {
@@ -64,7 +64,7 @@ const Level7OrderScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutorialT
   // --- PART 4: HANDLERS ---
   const handleConfirmOrder = () => {
     if (showTutorial) return;
-    
+
     // จังหวะที่เป๊ะ (Hit Zone อยู่ช่วง 45% - 55%)
     if (markerPos >= 42 && markerPos <= 58) {
       const nextScore = score + 1;
@@ -82,7 +82,7 @@ const Level7OrderScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutorialT
 
   return (
     <div className="absolute inset-0 bg-[#F8FAFC] overflow-hidden flex flex-col font-sans select-none">
-      
+
       {/* --- Layer 1: Fake Shopping UI --- */}
       <div className="p-6 bg-white border-b shadow-sm">
         <div className="flex items-center gap-2 text-[#15173D]">
@@ -95,8 +95,8 @@ const Level7OrderScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutorialT
         {/* รายการออเดอร์กองโต */}
         <div className="w-full max-w-sm bg-blue-50 border-2 border-dashed border-blue-200 rounded-3xl p-4 mb-6">
           <div className="flex justify-between items-start mb-3">
-             <div className="bg-blue-600 text-white text-[10px] px-2 py-1 rounded-md font-bold uppercase">Pending Order</div>
-             <p className="text-[#15173D] font-black text-sm">฿159,000</p>
+            <div className="bg-blue-600 text-white text-[10px] px-2 py-1 rounded-md font-bold uppercase">Pending Order</div>
+            <p className="text-[#15173D] font-black text-sm">฿159,000</p>
           </div>
           <div className="space-y-2 opacity-60">
             <div className="h-4 bg-blue-100 rounded w-full" />
@@ -110,9 +110,9 @@ const Level7OrderScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutorialT
           <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-12 bg-green-400 border-x-2 border-green-600 flex items-center justify-center">
             <CheckCircle2 size={16} className="text-green-800" />
           </div>
-          
+
           {/* Moving Arrow (ลูกศรที่วิ่งผ่าน) */}
-          <div 
+          <div
             className="absolute top-0 bottom-0 w-2 bg-red-600 shadow-[0_0_10px_red] transition-all duration-[16ms] linear"
             style={{ left: `${markerPos}%` }}
           />
@@ -121,7 +121,7 @@ const Level7OrderScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutorialT
         {/* ปุ่มกดวัดใจ (Dark UX) */}
         <div className="w-full max-w-xs space-y-4">
           {/* ปุ่มหลอก (ใหญ่และจูงใจ) */}
-          <button 
+          <button
             onClick={handleDepositScam}
             className="w-full py-6 bg-[#15173D] text-white rounded-3xl shadow-xl active:scale-95 transition-all flex flex-col items-center"
           >
@@ -130,12 +130,13 @@ const Level7OrderScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutorialT
             <span className="text-[10px] opacity-50 uppercase">สิทธิพิเศษสำหรับสมาชิก VIP เท่านั้น</span>
           </button>
 
-          {/* ปุ่มจริง (เล็กและกดจังหวะ) */}
-          <button 
+          <button
             onClick={handleConfirmOrder}
-            className="w-full py-3 border-2 border-[#15173D] text-[#15173D] rounded-2xl font-black italic text-xs uppercase hover:bg-gray-100 active:scale-90 transition-all flex items-center justify-center gap-2"
+            className="w-full min-h-[56px] py-4 border-2 border-[#15173D] text-[#15173D] rounded-2xl font-black italic text-sm uppercase 
+             active:bg-[#15173D] active:text-white transition-colors duration-75 
+             flex items-center justify-center gap-2 relative z-50 touch-manipulation"
           >
-            <MousePointer2 size={14} />
+            <MousePointer2 size={18} />
             ยืนยันออเดอร์ (ไม่ต้องมัดจำ)
           </button>
         </div>
@@ -160,15 +161,15 @@ const Level7OrderScam: React.FC<Props> = ({ onWin, onLose, timeLeft, onTutorialT
           </div>
         </div>
         <div className="h-2 w-full bg-black/5 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-[#15173D] transition-all duration-1000 ease-linear" 
-            style={{ width: `${(timeLeft / 10) * 100}%` }} 
+          <div
+            className="h-full bg-[#15173D] transition-all duration-1000 ease-linear"
+            style={{ width: `${(timeLeft / 10) * 100}%` }}
           />
         </div>
       </div>
 
       {/* --- Layer 3: Tutorial Overlay (Layer บนสุด) --- */}
-      <TutorialOverlay 
+      <TutorialOverlay
         isVisible={showTutorial}
         timer={tutorialTimer}
         icon={AlertTriangle}
